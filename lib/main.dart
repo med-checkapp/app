@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:check_app/pages/profiling.dart';
+import 'package:provider/provider.dart';
+
 
 void main() => runApp(MaterialApp(
-  home: Scaffold(
-    body: Center(
-      child: Text(
-        "CheckApp",
-        style: TextStyle(
-          fontSize: 32.0,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.5,
-          color: Colors.green[200],
-        ),
-      )
-    ),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => Profiling(),
+    },
   ),
-));
+);
 
