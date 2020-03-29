@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class ProfilingState with ChangeNotifier{
+class ProfilingState with ChangeNotifier {
   bool _idadePreenchida;
   bool _sexoPreenchido;
 
@@ -12,8 +12,13 @@ class ProfilingState with ChangeNotifier{
 
   bool filled() => _idadePreenchida && _sexoPreenchido;
 
-  void changeIdade()  {
-    _idadePreenchida = !_idadePreenchida;
+  void preencherIdade()  {
+    _idadePreenchida = true;
+    notifyListeners();
+  }
+
+  void esvaziarIdade() {
+    _idadePreenchida = false;
     notifyListeners();
   }
 
