@@ -26,4 +26,6 @@ class ProfilingState with ChangeNotifier {
     _sexoPreenchido = !_sexoPreenchido;
     notifyListeners();
   }
+
+  bool getSexo() => _sexoPreenchido;
 }

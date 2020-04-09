@@ -1,4 +1,5 @@
 import 'package:check_app/Notifiers/profiling_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -57,11 +58,13 @@ class _ProfilingState extends State<Profiling> {
                 autovalidate: _autovalidar,
                 controller: _idadeController,
                 onChanged: (value) {
+
                   _autovalidar = true;
                   Provider.of<ProfilingState>(context, listen: false).preencherIdade();
                 },
                 validator: (input) {
-                  if (input.compareTo("") == 0) {
+                  if (input.length == 0) {
+                    print("TExto vaio cara\n\n\ $input");
                     Provider.of<ProfilingState>(context, listen: false).esvaziarIdade();
                       return 'Idade não pode ser vazia';
                   }
@@ -87,7 +90,7 @@ class _ProfilingState extends State<Profiling> {
                   onChanged: (novoSexo) {
                     setState(() {
                       _sexo = novoSexo;
-                      Provider.of<ProfilingState>(context, listen: false).changeSexo();
+                      if (!Provider.of<ProfilingState>(context, listen: false).getSexo()) Provider.of<ProfilingState>(context, listen: false).changeSexo();
                     });
                     },
                   items: <String>['Masculino', 'Feminino']
@@ -124,6 +127,12 @@ class _ProfilingState extends State<Profiling> {
                         child: Text("Continuar"),
                         disabledColor: Colors.grey,
                         onPressed: profile.filled()? (){
+
+                          Navigator.pushNamed(context, '/actionList', arguments: {
+                            'sexo': _sexo,
+                            'idade': idade
+                          }
+                          );
                         }: null,
                         color: Colors.blue,
                       );
