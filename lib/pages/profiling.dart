@@ -20,7 +20,6 @@ class _ProfilingState extends State<Profiling> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
