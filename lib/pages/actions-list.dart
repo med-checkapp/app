@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ActionsList extends StatefulWidget {
+  final Map<String, dynamic> profile;
+  ActionsList(this.profile);
   @override
   _ActionsListState createState() => _ActionsListState();
 }
@@ -22,7 +24,7 @@ class _ActionsListState extends State<ActionsList> {
     return expandedTiles[index] != null ? expandedTiles[index] : false;
   }
 
-  void _onExpansionChanged(bool state, index) {
+  void _onExpansionChanged(bool state, int index) {
     if (state) {
       setState(() {
         expandedTiles[index] = true;
@@ -34,13 +36,6 @@ class _ActionsListState extends State<ActionsList> {
   }
 
   List<Widget> _actionList(actions) {
-    // return actions
-    //     .map<Widget>((action) => ListTile(
-    //         subtitle: Text(action["disclaimer"]),
-    //         key: PageStorageKey(action["_id"]),
-    //         title: Text(action["name"])))
-    //     .toList();
-
     return actions
         .map<Widget>(
           (action) => Card(
@@ -49,6 +44,7 @@ class _ActionsListState extends State<ActionsList> {
                   padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
                   width: double.maxFinite,
                   height: 150,
+                  color: Colors.lightBlue,
                   child: Column(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -78,7 +74,7 @@ class _ActionsListState extends State<ActionsList> {
             key: GlobalKey(),
             title: Text(
               disease.name,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
             ),
             subtitle: Text(disease.description),
             children: _actionList(disease.actions),
@@ -90,18 +86,16 @@ class _ActionsListState extends State<ActionsList> {
     return FutureBuilder(
       future: futureDisease,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData)
           return _diseasesList(snapshot.data);
-        } else if (snapshot.hasError) {
-          print(snapshot.error);
-          return Center(child: Text("Error"));
-        }
+        else if (snapshot.hasError) return Center(child: Text("Error"));
         return CircularProgressIndicator();
       },
     );
   }
 
   Future<List<Disease>> fetchDisease() async {
+    print(widget.profile);
     final response = await http.get("http://localhost:3000/diseases");
 
     if (response.statusCode == 200)
@@ -116,25 +110,53 @@ class _ActionsListState extends State<ActionsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Doenças relacionadas"),
-      ),
-      body: Container(
-          child: Column(children: [
-            Container(
-              child: Text(
-                "Perfil (descrever o perfil aqui)",
-                style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          title: Text("Doenças relacionadas"),
+        ),
+        body: Container(
+            child: Column(children: [
+              Container(
+                height: 50,
+                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                color: Color.fromRGBO(143, 255, 214, 0.5),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Text(
+                      "Sexo: ${widget.profile['sexo']}",
+                      style: TextStyle(fontSize: 20),
+                    )),
+                    Expanded(
+                        child: Text(
+                      "Idade: ${widget.profile['idade']}",
+                      style: TextStyle(fontSize: 20),
+                    ))
+                  ],
+                ),
               ),
-              margin: EdgeInsets.fromLTRB(0, 50, 0, 10),
-            ),
-            Container(
-                child: _futureBuilder(),
-                height: MediaQuery.of(context).size.height * 0.60)
-          ]),
-          alignment: Alignment.center,
-          color: Colors.white10),
-    );
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      child: Text(
+                        "Ações sugeridas para o profile",
+                        style: TextStyle(
+                            fontSize: 21,
+                            decorationStyle: TextDecorationStyle.solid),
+                      ),
+                    ),
+                    Container(
+                      child: _futureBuilder(),
+                      height: MediaQuery.of(context).size.height * 0.70,
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              )
+            ]),
+            alignment: Alignment.center,
+            color: Colors.white30));
   }
 }
 
