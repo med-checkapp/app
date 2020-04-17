@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:check_app/constants.dart';
+
 
 class ActionsList extends StatefulWidget {
   final Map<String, dynamic> profile;
@@ -43,10 +43,11 @@ class _ActionsListState extends State<ActionsList> {
           (action) => InkWell(
             onTap: () {
               if(actions.containsKey("wiki_id")) {
-                // vai para wiki
+               print("tem wiki");
+
               }
               else {
-                // vai para formulário
+                print("não tem wiki");
               }
             },
             child: Card(
