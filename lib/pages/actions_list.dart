@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:check_app/config_size.dart';
 
 
 class ActionsList extends StatefulWidget {
@@ -40,30 +41,19 @@ class _ActionsListState extends State<ActionsList> {
   List<Widget> _actionList(actions) {
     return actions
         .map<Widget>(
-          (action) => InkWell(
-            onTap: () {
-              if(actions.containsKey("wiki_id")) {
-               print("tem wiki");
-
-              }
-              else {
-                print("não tem wiki");
-              }
-            },
-            child: Card(
-                child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                    width: double.maxFinite,
-                    height: 150,
-                    color: Colors.lightBlue,
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          action["disclaimer"],
-                          style: TextStyle(fontSize: 18),
-                        ),
+          (action) => Card(
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                  width: double.maxFinite,
+                  height: 150,
+                  color: Colors.white12,
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        action["disclaimer"],
+                        style: TextStyle(fontSize: 18),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -83,7 +73,8 @@ class _ActionsListState extends State<ActionsList> {
           var disease = diseases[index];
           return ExpansionTile(
             initiallyExpanded: _initiallyExpanded(index),
-            onExpansionChanged: (state) => _onExpansionChanged(state, index),
+            onExpansionChanged: (state) =>
+                _onExpansionChanged(state, index, diseases),
             key: GlobalKey(),
             title: Text(
               disease.name,
@@ -102,7 +93,7 @@ class _ActionsListState extends State<ActionsList> {
         if (snapshot.hasData)
           return _diseasesList(snapshot.data);
         else if (snapshot.hasError) return Center(child: Text("Error"));
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -123,6 +114,8 @@ class _ActionsListState extends State<ActionsList> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Doenças relacionadas"),
@@ -130,7 +123,7 @@ class _ActionsListState extends State<ActionsList> {
         body: Container(
             child: Column(children: [
               Container(
-                height: 50,
+                height: SizeConfig.blockSizeVertical * 5,
                 padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                 color: Color.fromRGBO(143, 255, 214, 0.5),
                 child: Row(
@@ -162,7 +155,7 @@ class _ActionsListState extends State<ActionsList> {
                     ),
                     Container(
                       child: _futureBuilder(),
-                      height: MediaQuery.of(context).size.height * 0.70,
+                      height: SizeConfig.blockSizeVertical * 70,
                     ),
                   ],
                 ),

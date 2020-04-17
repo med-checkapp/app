@@ -2,7 +2,7 @@ import 'package:check_app/Notifiers/profiling_state.dart';
 import 'package:flutter/material.dart';
 import 'package:check_app/pages/profiling.dart';
 import 'package:provider/provider.dart';
-import 'package:check_app/pages/actions-list.dart';
+import 'package:check_app/pages/actions_list.dart';
 import 'package:check_app/constants.dart';
 import 'package:check_app/pages/wiki.dart';
 
