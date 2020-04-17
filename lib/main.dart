@@ -1,20 +1,14 @@
-import 'package:check_app/Notifiers/profiling_state.dart';
 import 'package:flutter/material.dart';
-import 'package:check_app/pages/profiling.dart';
-import 'package:provider/provider.dart';
-import 'package:check_app/pages/actions-list.dart';
+import 'package:check_app/router.dart';
+import 'package:check_app/constants.dart';
 
-void main() => runApp(
-      MaterialApp(
-        initialRoute: '/',
-        routes: {
-          '/': (context) {
-            return ChangeNotifierProvider<ProfilingState>(
-              create: (context) => ProfilingState(),
-              child: Profiling(),
-            );
-          },
-          '/actionList': (context) => ActionsList(),
-        },
-      ),
+void main() => runApp(App());
+
+class App extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      onGenerateRoute: Router.generateRoute,
+      initialRoute: homeRoute,
     );
+  }
+}

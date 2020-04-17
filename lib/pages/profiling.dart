@@ -1,8 +1,8 @@
 import 'package:check_app/Notifiers/profiling_state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:check_app/constants.dart';
 
 class Profiling extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class Profiling extends StatefulWidget {
 }
 
 class _ProfilingState extends State<Profiling> {
-  int idade;
+  int _idade;
   String _sexo;
   final _idadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -59,7 +59,7 @@ class _ProfilingState extends State<Profiling> {
                         .esvaziarIdade();
                     return 'Idade não pode ser vazia';
                   } else {
-                    idade = int.parse(input);
+                    _idade = int.parse(input);
                     Provider.of<ProfilingState>(context, listen: false)
                         .preencherIdade();
                     return null;
@@ -118,8 +118,8 @@ class _ProfilingState extends State<Profiling> {
                       disabledColor: Colors.grey,
                       onPressed: profile.filled()
                           ? () {
-                              Navigator.pushNamed(context, '/actionList',
-                                  arguments: {'sexo': _sexo, 'idade': idade});
+                              Navigator.pushNamed(context, actionsListRoute,
+                                  arguments: {'sexo': _sexo, 'idade': _idade});
                             }
                           : null,
                       color: Colors.blue,
