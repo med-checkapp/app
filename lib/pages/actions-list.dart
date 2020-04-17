@@ -1,7 +1,9 @@
+import 'package:check_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:check_app/constants.dart';
 
 class ActionsList extends StatefulWidget {
   final Map<String, dynamic> profile;
@@ -38,26 +40,36 @@ class _ActionsListState extends State<ActionsList> {
   List<Widget> _actionList(actions) {
     return actions
         .map<Widget>(
-          (action) => Card(
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                  width: double.maxFinite,
-                  height: 150,
-                  color: Colors.lightBlue,
-                  child: Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        action["disclaimer"],
-                        style: TextStyle(fontSize: 18),
+          (action) => InkWell(
+            onTap: () {
+              if(actions.containsKey("wiki_id")) {
+                // vai para wiki
+              }
+              else {
+                // vai para formulário
+              }
+            },
+            child: Card(
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                    width: double.maxFinite,
+                    height: 150,
+                    color: Colors.lightBlue,
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          action["disclaimer"],
+                          style: TextStyle(fontSize: 18),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(action["name"]),
-                    )
-                  ]))),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(action["name"]),
+                      )
+                    ]))),
+          ),
         )
         .toList();
   }
@@ -95,13 +107,10 @@ class _ActionsListState extends State<ActionsList> {
   }
 
   Future<List<Disease>> fetchDisease() async {
-<<<<<<< HEAD
-    final response = await http.get("http://localhost:3000/disease");
-=======
-    print(widget.profile);
-    final response = await http.get("http://localhost:3000/diseases");
->>>>>>> a23257bc53a8ed505803ca71f54765c7c60224ff
 
+    Map<String, String> parametros = {'sex': widget.profile['sexo'].toLowerCase(), 'age': widget.profile['idade'].toString(),};
+    var uri = Uri.http("$serverUrl:3000", "/profiling", parametros);
+    final response = await http.get(uri);
     if (response.statusCode == 200)
       return json
           .decode(response.body)
