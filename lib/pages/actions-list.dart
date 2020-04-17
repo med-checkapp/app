@@ -102,7 +102,7 @@ class _ActionsListState extends State<ActionsList> {
   }
 
   Future<List<Disease>> fetchDisease() async {
-    final response = await http.get("http://localhost:3000/diseases");
+    final response = await http.get("http://localhost:3000/disease");
 
     if (response.statusCode == 200)
       return json
