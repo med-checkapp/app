@@ -1,14 +1,14 @@
-import 'package:check_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:check_app/config_size.dart';
-
+import 'package:check_app/models/diseases.dart';
+import 'package:check_app/services/diseases.dart';
 
 class ActionsList extends StatefulWidget {
   final Map<String, dynamic> profile;
+
   ActionsList(this.profile);
+
   @override
   _ActionsListState createState() => _ActionsListState();
 }
@@ -20,7 +20,7 @@ class _ActionsListState extends State<ActionsList> {
   @override
   void initState() {
     super.initState();
-    futureDisease = fetchDisease();
+    futureDisease = fetchDisease(widget.profile);
   }
 
   bool _initiallyExpanded(index) {
@@ -38,28 +38,31 @@ class _ActionsListState extends State<ActionsList> {
     }
   }
 
-  List<Widget> _actionList(actions) {
+  List<Widget> _actionsList(actions) {
     return actions
         .map<Widget>(
           (action) => Card(
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                  width: double.maxFinite,
-                  height: 150,
-                  color: Colors.white12,
-                  child: Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+            child: Container(
+                padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                width: SizeConfig.screenWidth,
+                height: SizeConfig.blockSizeVertical * 10,
+                color: Colors.white12,
+                child: Column(children: [
+                  ListTile(
+                    leading: Icon(IconData(0xe57b, fontFamily: 'MaterialIcons'),
+                        color: Colors.amber),
+                    title: Text(action.name,
+                        style: TextStyle(
+                          fontSize: 18,
+                        )),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: Text(
-                        action["disclaimer"],
-                        style: TextStyle(fontSize: 18),
+                        action.disclaimer,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(action["name"]),
-                      )
-                    ]))),
+                    ),
+                  ),
+                ])),
           ),
         )
         .toList();
@@ -67,21 +70,20 @@ class _ActionsListState extends State<ActionsList> {
 
   ListView _diseasesList(diseases) {
     return ListView.builder(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(1),
         itemCount: diseases.length,
         itemBuilder: (context, index) {
           var disease = diseases[index];
           return ExpansionTile(
             initiallyExpanded: _initiallyExpanded(index),
-            onExpansionChanged: (state) =>
-                _onExpansionChanged(state, index, diseases),
+            onExpansionChanged: (state) => _onExpansionChanged(state, index),
             key: GlobalKey(),
             title: Text(
               disease.name,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
             ),
             subtitle: Text(disease.description),
-            children: _actionList(disease.actions),
+            children: _actionsList(disease.actions),
           );
         });
   }
@@ -96,20 +98,6 @@ class _ActionsListState extends State<ActionsList> {
         return Center(child: CircularProgressIndicator());
       },
     );
-  }
-
-  Future<List<Disease>> fetchDisease() async {
-
-    Map<String, String> parametros = {'sex': widget.profile['sexo'].toLowerCase(), 'age': widget.profile['idade'].toString(),};
-    var uri = Uri.http("$serverUrl:3000", "/profiling", parametros);
-    final response = await http.get(uri);
-    if (response.statusCode == 200)
-      return json
-          .decode(response.body)
-          .map<Disease>((item) => Disease.fromJson(item))
-          .toList();
-    else
-      throw Exception('Faild to get Disease');
   }
 
   @override
@@ -164,22 +152,5 @@ class _ActionsListState extends State<ActionsList> {
             ]),
             alignment: Alignment.center,
             color: Colors.white30));
-  }
-}
-
-class Disease {
-  final String id;
-  final String name;
-  final String description;
-  final List<dynamic> actions;
-
-  Disease({this.id, this.name, this.description, this.actions});
-
-  factory Disease.fromJson(Map<String, dynamic> json) {
-    return Disease(
-        id: json['_id'],
-        name: json['name'],
-        description: "",
-        actions: json["actions"]);
   }
 }
