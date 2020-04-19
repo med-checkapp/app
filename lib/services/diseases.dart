@@ -3,12 +3,13 @@ import 'package:check_app/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<List<Disease>> fetchDisease(dynamic data) async {
-  Map<String, String> parametros = {
-    'sex': data['sexo'].toLowerCase(),
-    'age': data['idade'].toString(),
+Future<List<Disease>> getDiseasesByProfileTarget(
+    {String sex, String age}) async {
+  Map<String, String> params = {
+    'sex': sex.toLowerCase(),
+    'age': age,
   };
-  Uri uri = Uri.http("$serverUrl:3000", "/profiling", parametros);
+  Uri uri = Uri.http("$serverUrl:3000", "/profiling", params);
   final response = await http.get(uri);
 
   if (response.statusCode == 200)

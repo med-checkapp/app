@@ -6,13 +6,14 @@ import 'package:url_launcher/url_launcher.dart';
 class Wiki extends StatelessWidget {
   Map data;
   Wiki(this.data);
-  String capitalize(String s) => s.length > 1? s[0].toUpperCase() + s.substring(1): s[0].toUpperCase();
+  String capitalize(String s) =>
+      s.length > 1 ? s[0].toUpperCase() + s.substring(1) : s[0].toUpperCase();
 
   Future<void> _launchLink(String url) async {
-    if (await canLaunch(url)){
+    if (await canLaunch(url)) {
       await launch(url, forceSafariVC: true, forceWebView: true);
-    }
-    else throw 'Could not open $url';
+    } else
+      throw 'Could not open $url';
   }
 
   @override
@@ -33,25 +34,21 @@ class Wiki extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
             bottom: TabBar(
-              //indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              tabs: data.keys.map((k) => Tab(text: capitalize(k))).toList()
-            ),
+                //indicatorSize: TabBarIndicatorSize.label,
+                isScrollable: true,
+                tabs: data.keys.map((k) => Tab(text: capitalize(k))).toList()),
             title: Text("CheckApp")),
-        drawer: Drawer(),
         body: TabBarView(
-          children: data.values.map((k) => Html(
-              data: """<center> 
+            children: data.values
+                .map((k) => Html(
+                    data: """<center> 
                           <strong>${capitalize(k)}</strong>
                           <a href='https://codelab.ime.usp.br/webdev.html'>clica aq corno</a>
                        </center>""",
-              onLinkTap: (url) {
-                _launchLink(url);
-              }
-              ))
-              .toList()
-
-        ),
+                    onLinkTap: (url) {
+                      _launchLink(url);
+                    }))
+                .toList()),
       ),
     );
   }

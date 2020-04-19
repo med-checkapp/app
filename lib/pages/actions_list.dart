@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:check_app/config_size.dart';
 import 'package:check_app/models/diseases.dart';
 import 'package:check_app/services/diseases.dart';
+import 'package:check_app/constants.dart';
 
 class ActionsList extends StatefulWidget {
   final Map<String, dynamic> profile;
@@ -20,11 +21,12 @@ class _ActionsListState extends State<ActionsList> {
   @override
   void initState() {
     super.initState();
-    futureDisease = fetchDisease(widget.profile);
+    futureDisease = getDiseasesByProfileTarget(
+        sex: widget.profile["sexo"], age: widget.profile["idade"].toString());
   }
 
   bool _initiallyExpanded(index) {
-    return expandedTiles[index] != null ? expandedTiles[index] : false;
+    return expandedTiles[index] ?? false;
   }
 
   void _onExpansionChanged(bool state, int index) {
@@ -41,28 +43,33 @@ class _ActionsListState extends State<ActionsList> {
   List<Widget> _actionsList(actions) {
     return actions
         .map<Widget>(
-          (action) => Card(
-            child: Container(
-                padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                width: SizeConfig.screenWidth,
-                height: SizeConfig.blockSizeVertical * 10,
-                color: Colors.white12,
-                child: Column(children: [
-                  ListTile(
-                    leading: Icon(IconData(0xe57b, fontFamily: 'MaterialIcons'),
-                        color: Colors.amber),
-                    title: Text(action.name,
-                        style: TextStyle(
-                          fontSize: 18,
-                        )),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text(
-                        action.disclaimer,
+          (action) => InkWell(
+            onTap: () => Navigator.pushNamed(context, wikiRoute,
+                arguments: {"wikiId": action.wikiId}),
+            child: Card(
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                  width: SizeConfig.screenWidth,
+                  height: SizeConfig.blockSizeVertical * 10,
+                  color: Colors.white12,
+                  child: Column(children: [
+                    ListTile(
+                      leading: Icon(
+                          IconData(0xe57b, fontFamily: 'MaterialIcons'),
+                          color: Colors.amber),
+                      title: Text(action.name,
+                          style: TextStyle(
+                            fontSize: 18,
+                          )),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: Text(
+                          action.disclaimer,
+                        ),
                       ),
                     ),
-                  ),
-                ])),
+                  ])),
+            ),
           ),
         )
         .toList();
@@ -112,20 +119,19 @@ class _ActionsListState extends State<ActionsList> {
             child: Column(children: [
               Container(
                 height: SizeConfig.blockSizeVertical * 5,
-                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                padding: EdgeInsets.all(5),
                 color: Color.fromRGBO(143, 255, 214, 0.5),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Expanded(
-                        child: Text(
+                    Text(
                       "Sexo: ${widget.profile['sexo']}",
                       style: TextStyle(fontSize: 20),
-                    )),
-                    Expanded(
-                        child: Text(
+                    ),
+                    Text(
                       "Idade: ${widget.profile['idade']}",
                       style: TextStyle(fontSize: 20),
-                    ))
+                    )
                   ],
                 ),
               ),
