@@ -4,7 +4,7 @@ import 'package:check_app/pages/profiling.dart';
 import 'package:provider/provider.dart';
 import 'package:check_app/pages/actions_list.dart';
 import 'package:check_app/constants.dart';
-import 'package:check_app/pages/wiki.dart';
+import 'package:check_app/pages/wiki_page.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,7 +20,7 @@ class Router {
             builder: (ctx) => ActionsList(settings.arguments));
       case wikiRoute:
         return MaterialPageRoute(
-            builder: (ctx) => Wiki(settings.arguments)
+            builder: (ctx) => WikiPage(settings.arguments)
         );
       default:
         return MaterialPageRoute(
