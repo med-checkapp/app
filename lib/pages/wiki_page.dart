@@ -45,6 +45,7 @@ class _WikiPageState extends State<WikiPage> {
         body: TabBarView(
             children: wiki.content
                 .map<Html>((k) => Html(
+                padding: EdgeInsets.all(20.0),
                 data: k.body,
                 onLinkTap: (url) {
                   _launchLink(url);

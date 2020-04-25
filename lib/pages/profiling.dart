@@ -1,4 +1,6 @@
 import 'package:check_app/Notifiers/profiling_state.dart';
+import 'package:check_app/models/diseases.dart';
+import 'package:check_app/services/diseases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class _ProfilingState extends State<Profiling> {
   final _idadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _autovalidar = false;
+  Future<List<Disease>> futureDisease;
 
   @override
   void initState() {
@@ -26,6 +29,15 @@ class _ProfilingState extends State<Profiling> {
   void dispose() {
     // Clean up the focus node when the Form is disposed.
     super.dispose();
+  }
+
+  dynamic validate(int idade, String sexo) {
+      if (idade < 0 || idade > 120)
+        return {"isValid": false, "reason": "Idade precisa ser um número entre 0 e 120"};
+      if (sexo != 'Masculino' && sexo != 'Feminino')
+        return {"isValid": false, "reason": "Sexo inválido"};
+
+      return {"isValid": true, "reason": ""};
   }
 
   @override
@@ -59,7 +71,6 @@ class _ProfilingState extends State<Profiling> {
                   },
                   validator: (input) {
                     if (input.length == 0) {
-                      print("TExto vaio cara\n\n\ $input");
                       Provider.of<ProfilingState>(context, listen: false)
                           .esvaziarIdade();
                       return 'Idade não pode ser vazia';
@@ -128,13 +139,22 @@ class _ProfilingState extends State<Profiling> {
                         disabledColor: Colors.grey,
                         onPressed: profile.filled()
                             ? () {
+                            dynamic validation = validate(_idade, _sexo);
+                            print(validation);
+                              if (validation['isValid']) {
+                                futureDisease = getDiseasesByProfileTarget(
+                                    sex: _sexo, age: _idade.toString());
                                 Navigator.pushNamed(context, actionsListRoute,
                                     arguments: {
                                       'sexo': _sexo,
-                                      'idade': _idade
+                                      'idade': _idade,
                                     });
-                              }
-                            : null,
+                                }
+                                else
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(validation["reason"]),
+                                ));
+                              }: null,
                         color: Colors.blue,
                       );
                     })

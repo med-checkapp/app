@@ -18,5 +18,5 @@ Future<List<Disease>> getDiseasesByProfileTarget(
         .map<Disease>((item) => Disease.fromJson(item))
         .toList();
   else
-    throw Exception('Faild to request Disease');
+    throw new Exception('Faild to request Disease');
 }
