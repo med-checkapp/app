@@ -31,25 +31,26 @@ class _WikiPageState extends State<WikiPage> {
     _futureWiki = getWikiById(widget.args["wikiId"]);
   }
 
-
   DefaultTabController _showTabs(wiki) {
     return DefaultTabController(
       length: wiki.content.length,
       child: Scaffold(
         appBar: AppBar(
             bottom: TabBar(
-              //indicatorSize: TabBarIndicatorSize.label,
+                //indicatorSize: TabBarIndicatorSize.label,
                 isScrollable: true,
-                tabs: wiki.content.map<Tab>((k) => Tab(text: capitalize(k.name))).toList()),
+                tabs: wiki.content
+                    .map<Tab>((k) => Tab(text: capitalize(k.name)))
+                    .toList()),
             title: Text("CheckApp")),
         body: TabBarView(
             children: wiki.content
                 .map<Html>((k) => Html(
-                padding: EdgeInsets.all(20.0),
-                data: k.body,
-                onLinkTap: (url) {
-                  _launchLink(url);
-                }))
+                    padding: EdgeInsets.all(20.0),
+                    data: k.body,
+                    onLinkTap: (url) {
+                      _launchLink(url);
+                    }))
                 .toList()),
       ),
     );
@@ -57,14 +58,31 @@ class _WikiPageState extends State<WikiPage> {
 
   @override
   Widget build(BuildContext context) {
-
     //Map data = ModalRoute.of(context).settings.arguments;
     return FutureBuilder(
       future: _futureWiki,
       builder: (context, snapshot) {
         if (snapshot.hasData)
           return _showTabs(snapshot.data);
-        else if (snapshot.hasError) return Center(child: Text("Error"));
+        else if (snapshot.hasError)
+          return Scaffold(
+            appBar: AppBar(),
+            body: Center(
+                child: Center(
+                    child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "🥺",
+                  style: TextStyle(fontSize: 125),
+                ),
+                Text(
+                  "Conteúdo não disponível.",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ))),
+          );
         return Center(child: CircularProgressIndicator());
       },
     );

@@ -7,7 +7,11 @@ void main() => runApp(App());
 class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.teal,
+      theme: ThemeData(
+        buttonTheme: ButtonThemeData(
+            buttonColor: Colors.teal, textTheme: ButtonTextTheme.primary),
+        primaryColor: Colors.teal,
+      ),
       onGenerateRoute: Router.generateRoute,
       initialRoute: homeRoute,
     );

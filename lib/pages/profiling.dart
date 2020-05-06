@@ -32,12 +32,15 @@ class _ProfilingState extends State<Profiling> {
   }
 
   dynamic validate(int idade, String sexo) {
-      if (idade < 0 || idade > 120)
-        return {"isValid": false, "reason": "Idade precisa ser um número entre 0 e 120"};
-      if (sexo != 'Masculino' && sexo != 'Feminino')
-        return {"isValid": false, "reason": "Sexo inválido"};
+    if (idade < 0 || idade > 120)
+      return {
+        "isValid": false,
+        "reason": "Idade precisa ser um número entre 0 e 120"
+      };
+    if (sexo != 'Masculino' && sexo != 'Feminino')
+      return {"isValid": false, "reason": "Sexo inválido"};
 
-      return {"isValid": true, "reason": ""};
+    return {"isValid": true, "reason": ""};
   }
 
   @override
@@ -92,8 +95,8 @@ class _ProfilingState extends State<Profiling> {
                       value: _sexo,
                       icon: Icon(Icons.arrow_drop_down),
                       iconSize: 24,
-                      hint: Text("Sexo"),
                       elevation: 16,
+                      hint: Text("Sexo"),
                       onChanged: (novoSexo) {
                         setState(() {
                           _sexo = novoSexo;
@@ -118,9 +121,8 @@ class _ProfilingState extends State<Profiling> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    FlatButton(
+                    RaisedButton(
                         child: Text("Limpar"),
-                        color: Colors.grey,
                         onPressed: () {
                           setState(() {
                             Provider.of<ProfilingState>(context, listen: false)
@@ -134,28 +136,26 @@ class _ProfilingState extends State<Profiling> {
                         }),
                     Consumer<ProfilingState>(
                         builder: (context, profile, child) {
-                      return FlatButton(
+                      return RaisedButton(
                         child: Text("Continuar"),
-                        disabledColor: Colors.grey,
                         onPressed: profile.filled()
                             ? () {
-                            dynamic validation = validate(_idade, _sexo);
-                            print(validation);
-                              if (validation['isValid']) {
-                                futureDisease = getDiseasesByProfileTarget(
-                                    sex: _sexo, age: _idade.toString());
-                                Navigator.pushNamed(context, actionsListRoute,
-                                    arguments: {
-                                      'sexo': _sexo,
-                                      'idade': _idade,
-                                    });
-                                }
-                                else
+                                dynamic validation = validate(_idade, _sexo);
+                                print(validation);
+                                if (validation['isValid']) {
+                                  futureDisease = getDiseasesByProfileTarget(
+                                      sex: _sexo, age: _idade.toString());
+                                  Navigator.pushNamed(context, actionsListRoute,
+                                      arguments: {
+                                        'sexo': _sexo,
+                                        'idade': _idade,
+                                      });
+                                } else
                                   Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text(validation["reason"]),
-                                ));
-                              }: null,
-                        color: Colors.blue,
+                                    content: Text(validation["reason"]),
+                                  ));
+                              }
+                            : null,
                       );
                     })
                   ],
