@@ -6,7 +6,7 @@ import 'dart:convert';
 
 Future<Wiki> getWikiById(String wikiId) async {
 
-  Uri uri = Uri.http("$serverUrl:3000", "/wikis/$wikiId");
+  Uri uri = Uri.http(serverUrl, "/wikis/$wikiId");
   final response = await http.get(uri);
 
   print("\n\n ${response.body}\n\n");

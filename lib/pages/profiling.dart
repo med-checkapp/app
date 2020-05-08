@@ -32,7 +32,7 @@ class _ProfilingState extends State<Profiling> {
   }
 
   dynamic validate(int idade, String sexo) {
-    if (idade < 0 || idade > 120)
+    if (idade == null || idade < 0 || idade > 120)
       return {
         "isValid": false,
         "reason": "Idade precisa ser um número entre 0 e 120"
@@ -78,7 +78,7 @@ class _ProfilingState extends State<Profiling> {
                           .esvaziarIdade();
                       return 'Idade não pode ser vazia';
                     } else {
-                      _idade = int.parse(input);
+                        _idade = int.tryParse(input); 
                       Provider.of<ProfilingState>(context, listen: false)
                           .preencherIdade();
                       return null;

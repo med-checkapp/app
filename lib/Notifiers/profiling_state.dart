@@ -28,4 +28,5 @@ class ProfilingState with ChangeNotifier {
   }
 
   bool getSexo() => _sexoPreenchido;
+  bool getIdade() => _idadePreenchida;
 }

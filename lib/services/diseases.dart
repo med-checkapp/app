@@ -9,7 +9,7 @@ Future<List<Disease>> getDiseasesByProfileTarget(
     'sex': sex.toLowerCase(),
     'age': age,
   };
-  Uri uri = Uri.http("$serverUrl:3000", "/profiling", params);
+  Uri uri = Uri.http(serverUrl, "/profiling", params);
   final response = await http.get(uri);
 
   if (response.statusCode == 200)
