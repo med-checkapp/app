@@ -42,7 +42,7 @@ class _ProfilingState extends State<Profiling> {
 
     return {"isValid": true, "reason": ""};
   }
-
+  
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -91,29 +91,32 @@ class _ProfilingState extends State<Profiling> {
                 ),
                 Center(
                   child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _sexo,
-                      icon: Icon(Icons.arrow_drop_down),
-                      iconSize: 24,
-                      elevation: 16,
-                      hint: Text("Sexo"),
-                      onChanged: (novoSexo) {
-                        setState(() {
-                          _sexo = novoSexo;
-                          if (!Provider.of<ProfilingState>(context,
-                                  listen: false)
-                              .getSexo())
-                            Provider.of<ProfilingState>(context, listen: false)
-                                .changeSexo();
-                        });
-                      },
-                      items:
-                          <String>['Masculino', 'Feminino'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          child: Text(value),
-                          value: value,
-                        );
-                      }).toList(),
+                    child: Listener(
+                      onPointerDown: (_) => FocusScope.of(context).unfocus(),
+                      child: DropdownButton<String>(
+                        value: _sexo,
+                        icon: Icon(Icons.arrow_drop_down),
+                        iconSize: 24,
+                        elevation: 16,
+                        hint: Text("Sexo"),
+                        onChanged: (novoSexo) {
+                          setState(() {
+                            _sexo = novoSexo;
+                            if (!Provider.of<ProfilingState>(context,
+                                    listen: false)
+                                .getSexo())
+                              Provider.of<ProfilingState>(context, listen: false)
+                                  .changeSexo();
+                          });
+                        },
+                        items:
+                            <String>['Masculino', 'Feminino'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            child: Text(value),
+                            value: value,
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),

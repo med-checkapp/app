@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:check_app/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:check_app/models/wiki.dart';
 import 'package:check_app/services/wiki.dart';
