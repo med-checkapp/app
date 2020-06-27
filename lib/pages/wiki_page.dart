@@ -15,7 +15,7 @@ class WikiPage extends StatefulWidget {
 class _WikiPageState extends State<WikiPage> {
   Future<Wiki> _futureWiki;
   String capitalize(String s) =>
-      s.length > 1 ? s[0].toUpperCase() + s.substring(1) : s[0].toUpperCase();
+      s.length > 1 ? "${s[0].toUpperCase()}${s.substring(1)}" : s[0].toUpperCase();
 
   Future<void> _launchLink(String url) async {
     if (await canLaunch(url)) {
