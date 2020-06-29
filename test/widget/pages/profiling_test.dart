@@ -51,9 +51,6 @@ void main() {
     )));
 
     var emptySexField2 = find.byType(DropdownButtonHideUnderline);
-    print("Pão \n\n");
-    print(emptySexField2);
-    print("Pão \n\n");
     var emptySexField = find.descendant(of: find.byType(DropdownButtonHideUnderline),
                                             matching: find.byType(DropdownButton));
     expect(emptySexField , findsOneWidget);

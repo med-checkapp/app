@@ -42,7 +42,27 @@ class _ProfilingState extends State<Profiling> {
 
     return {"isValid": true, "reason": ""};
   }
-  
+
+  void preenchaIdade(BuildContext context, String value) {
+    _autovalidar = true;
+    if (value == "") {
+      Provider.of<ProfilingState>(context, listen: false).clearIdade();
+    }
+    else if(!Provider.of<ProfilingState>(context, listen: false).getIdade()) {
+      Provider.of<ProfilingState>(context, listen: false).fillIdade();
+    }
+  }
+
+  void clearNotifier(BuildContext context) {
+    setState(() {
+      Provider.of<ProfilingState>(context, listen: false).clearIdade();
+      Provider.of<ProfilingState>(context, listen: false).clearSexo();
+      _sexo = null;
+      _idadeController.clear();
+      _autovalidar = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -68,19 +88,13 @@ class _ProfilingState extends State<Profiling> {
                   autovalidate: _autovalidar,
                   controller: _idadeController,
                   onChanged: (value) {
-                    _autovalidar = true;
-                    Provider.of<ProfilingState>(context, listen: false)
-                        .preencherIdade();
+                    preenchaIdade(context, value);
                   },
                   validator: (input) {
                     if (input.length == 0) {
-                      Provider.of<ProfilingState>(context, listen: false)
-                          .esvaziarIdade();
                       return 'Idade não pode ser vazia';
                     } else {
-                        _idade = int.tryParse(input); 
-                      Provider.of<ProfilingState>(context, listen: false)
-                          .preencherIdade();
+                      _idade = int.tryParse(input);
                       return null;
                     }
                   },
@@ -100,17 +114,15 @@ class _ProfilingState extends State<Profiling> {
                         elevation: 16,
                         hint: Text("Sexo"),
                         onChanged: (novoSexo) {
+                          if (!Provider.of<ProfilingState>(context, listen: false).getSexo()) {
+                            Provider.of<ProfilingState>(context, listen: false).fillSexo();
+                          }
                           setState(() {
                             _sexo = novoSexo;
-                            if (!Provider.of<ProfilingState>(context,
-                                    listen: false)
-                                .getSexo())
-                              Provider.of<ProfilingState>(context, listen: false)
-                                  .changeSexo();
                           });
                         },
-                        items:
-                            <String>['Masculino', 'Feminino'].map((String value) {
+                        items: <String>['Masculino', 'Feminino']
+                            .map((String value) {
                           return DropdownMenuItem<String>(
                             child: Text(value),
                             value: value,
@@ -127,24 +139,15 @@ class _ProfilingState extends State<Profiling> {
                     RaisedButton(
                         child: Text("Limpar"),
                         onPressed: () {
-                          setState(() {
-                            Provider.of<ProfilingState>(context, listen: false)
-                                .esvaziarIdade();
-                            Provider.of<ProfilingState>(context, listen: false)
-                                .changeSexo();
-                            _sexo = null;
-                            _idadeController.clear();
-                            _autovalidar = false;
-                          });
+                          clearNotifier(context);
                         }),
                     Consumer<ProfilingState>(
-                        builder: (context, profile, child) {
+                        builder: (context, profile, _) {
                       return RaisedButton(
                         child: Text("Continuar"),
                         onPressed: profile.filled()
                             ? () {
                                 dynamic validation = validate(_idade, _sexo);
-                                print(validation);
                                 if (validation['isValid']) {
                                   futureDisease = getDiseasesByProfileTarget(
                                       sex: _sexo, age: _idade.toString());

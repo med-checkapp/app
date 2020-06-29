@@ -1,6 +1,4 @@
 import 'package:test/test.dart';
-import 'dart:convert';
-import 'package:check_app/models/tab.dart';
 import 'package:check_app/Notifiers/profiling_state.dart';
 
 
@@ -13,20 +11,20 @@ void main() {
 
   test('Clear age field', () {
     final ps = ProfilingState();
-    ps.esvaziarIdade();
+    ps.clearIdade();
     expect(ps.getIdade() , false);
   });
 
    test('Fill age field', () {
     final ps = ProfilingState();
-    ps.preencherIdade();
+    ps.fillIdade();
     expect(ps.getIdade() , true);
   });
 
   test('Change sex field', () {
     final ps = ProfilingState();
     final bool aux = ps.getSexo();
-    ps.changeSexo();
+    //ps.changeSexo();
     expect(aux , !ps.getSexo());
   });
  

@@ -35,6 +35,7 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   flutter_launcher_icons: ^0.7.5
+  effective_dart: ^1.2.0
 
 flutter_icons:
   image_path: "assets/icon.png"
