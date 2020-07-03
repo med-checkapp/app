@@ -1,11 +1,11 @@
 import 'package:check_app/Notifiers/profiling_state.dart';
+import 'package:check_app/config_size.dart';
+import 'package:check_app/constants.dart';
 import 'package:check_app/models/diseases.dart';
 import 'package:check_app/services/diseases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:check_app/constants.dart';
-import 'package:check_app/config_size.dart';
 
 class Profiling extends StatefulWidget {
   @override
@@ -32,13 +32,15 @@ class _ProfilingState extends State<Profiling> {
   }
 
   dynamic validate(int idade, String sexo) {
-    if (idade == null || idade < 0 || idade > 120)
+    if (idade == null || idade < 0 || idade > 120) {
       return {
         "isValid": false,
         "reason": "Idade precisa ser um número entre 0 e 120"
       };
-    if (sexo != 'Masculino' && sexo != 'Feminino')
+    }
+    if (sexo != 'Masculino' && sexo != 'Feminino') {
       return {"isValid": false, "reason": "Sexo inválido"};
+    }
 
     return {"isValid": true, "reason": ""};
   }
@@ -46,17 +48,16 @@ class _ProfilingState extends State<Profiling> {
   void preenchaIdade(BuildContext context, String value) {
     _autovalidar = true;
     if (value == "") {
-      Provider.of<ProfilingState>(context, listen: false).clearIdade();
-    }
-    else if(!Provider.of<ProfilingState>(context, listen: false).getIdade()) {
-      Provider.of<ProfilingState>(context, listen: false).fillIdade();
+      Provider.of<ProfilingState>(context, listen: false).clearAge();
+    } else if (!Provider.of<ProfilingState>(context, listen: false).idade) {
+      Provider.of<ProfilingState>(context, listen: false).fillAge();
     }
   }
 
   void clearNotifier(BuildContext context) {
     setState(() {
-      Provider.of<ProfilingState>(context, listen: false).clearIdade();
-      Provider.of<ProfilingState>(context, listen: false).clearSexo();
+      Provider.of<ProfilingState>(context, listen: false).clearAge();
+      Provider.of<ProfilingState>(context, listen: false).clearSex();
       _sexo = null;
       _idadeController.clear();
       _autovalidar = false;
@@ -114,8 +115,11 @@ class _ProfilingState extends State<Profiling> {
                         elevation: 16,
                         hint: Text("Sexo"),
                         onChanged: (novoSexo) {
-                          if (!Provider.of<ProfilingState>(context, listen: false).getSexo()) {
-                            Provider.of<ProfilingState>(context, listen: false).fillSexo();
+                          if (!Provider.of<ProfilingState>(context,
+                                  listen: false)
+                              .sexo) {
+                            Provider.of<ProfilingState>(context, listen: false)
+                                .fillSex();
                           }
                           setState(() {
                             _sexo = novoSexo;
@@ -141,11 +145,10 @@ class _ProfilingState extends State<Profiling> {
                         onPressed: () {
                           clearNotifier(context);
                         }),
-                    Consumer<ProfilingState>(
-                        builder: (context, profile, _) {
+                    Consumer<ProfilingState>(builder: (context, profile, _) {
                       return RaisedButton(
                         child: Text("Continuar"),
-                        onPressed: profile.filled()
+                        onPressed: profile.filled
                             ? () {
                                 dynamic validation = validate(_idade, _sexo);
                                 if (validation['isValid']) {
@@ -156,10 +159,11 @@ class _ProfilingState extends State<Profiling> {
                                         'sexo': _sexo,
                                         'idade': _idade,
                                       });
-                                } else
+                                } else {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text(validation["reason"]),
                                   ));
+                                }
                               }
                             : null,
                       );

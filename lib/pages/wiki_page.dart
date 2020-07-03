@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:check_app/models/wiki.dart';
 import 'package:check_app/services/wiki.dart';
+import 'package:check_app/pages/wiki_web_view.dart';
 
 class WikiPage extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -14,15 +15,15 @@ class WikiPage extends StatefulWidget {
 
 class _WikiPageState extends State<WikiPage> {
   Future<Wiki> _futureWiki;
-  String capitalize(String s) =>
-      s.length > 1 ? "${s[0].toUpperCase()}${s.substring(1)}" : s[0].toUpperCase();
+  String capitalize(String s) => s.length > 1
+      ? "${s[0].toUpperCase()}${s.substring(1)}"
+      : s[0].toUpperCase();
 
-  Future<void> _launchLink(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: true, forceWebView: true);
-    } else
-      throw 'Could not open $url';
-  }
+  // Future<void> _launchLink(String url, context) async {
+  //   if (await canLaunch(url)) {
+  //   } else
+  //     throw 'Could not open $url';
+  // }
 
   @override
   void initState() {
@@ -48,7 +49,13 @@ class _WikiPageState extends State<WikiPage> {
                     padding: EdgeInsets.all(20.0),
                     data: k.body,
                     onLinkTap: (url) {
-                      _launchLink(url);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WikiWebView(url),
+                        ),
+                      );
+                      //_launchLink(url, context);
                     }))
                 .toList()),
       ),

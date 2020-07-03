@@ -1,31 +1,28 @@
 import 'package:test/test.dart';
 import 'package:check_app/Notifiers/profiling_state.dart';
 
-
 void main() {
-
   test('Start a profile with empty data', () {
     final ps = ProfilingState();
-    expect(ps.getIdade() || ps.getSexo(), false);
+    expect(ps.idade || ps.sexo, false);
   });
 
   test('Clear age field', () {
     final ps = ProfilingState();
-    ps.clearIdade();
-    expect(ps.getIdade() , false);
+    ps.clearAge();
+    expect(ps.idade, false);
   });
 
-   test('Fill age field', () {
+  test('Fill age field', () {
     final ps = ProfilingState();
-    ps.fillIdade();
-    expect(ps.getIdade() , true);
+    ps.fillAge();
+    expect(ps.idade, true);
   });
 
   test('Change sex field', () {
     final ps = ProfilingState();
-    final bool aux = ps.getSexo();
+    final bool aux = ps.sexo;
     //ps.changeSexo();
-    expect(aux , !ps.getSexo());
+    expect(aux, !ps.sexo);
   });
- 
 }

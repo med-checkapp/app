@@ -1,1 +1,8 @@
 include: package:effective_dart/analysis_options.yaml
+
+linter:
+  rules:
+    public_member_api_docs: false
+    avoid_relative_lib_imports: false
+    prefer_mixin: false
+    prefer_relative_imports: false

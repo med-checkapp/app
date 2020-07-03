@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 
 class ProfilingState with ChangeNotifier {
-  bool _idadePreenchida;
-  bool _sexoPreenchido;
+  bool _ageFilled;
+  bool _sexFilled;
 
   ProfilingState() {
-    _idadePreenchida = false;
-    _sexoPreenchido = false;
+    _ageFilled = false;
+    _sexFilled = false;
   }
 
-  bool filled() => _idadePreenchida && _sexoPreenchido;
+  bool get filled => _ageFilled && _sexFilled;
 
-  void fillIdade() {
-      _idadePreenchida = true;
-      notifyListeners();
-  }
-
-  void clearIdade() {
-    _idadePreenchida = false;
+  void fillAge() {
+    _ageFilled = true;
     notifyListeners();
   }
 
-  void fillSexo() {
-    _sexoPreenchido = !_sexoPreenchido;
+  void clearAge() {
+    _ageFilled = false;
     notifyListeners();
   }
 
-  void clearSexo() {
-    _sexoPreenchido = false;
+  void fillSex() {
+    _sexFilled = !_sexFilled;
     notifyListeners();
-}
+  }
 
-  bool getSexo() => _sexoPreenchido;
-  bool getIdade() => _idadePreenchida;
+  void clearSex() {
+    _sexFilled = false;
+    notifyListeners();
+  }
+
+  bool get sexo => _sexFilled;
+  bool get idade => _ageFilled;
 }
