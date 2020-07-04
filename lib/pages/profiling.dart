@@ -108,7 +108,8 @@ class _ProfilingState extends State<Profiling> {
                   child: DropdownButtonHideUnderline(
                     child: Listener(
                       onPointerDown: (_) => FocusScope.of(context).unfocus(),
-                      child: DropdownButton<String>(
+                      child: DropdownButton<dynamic>(
+                        key: ValueKey("DropdownButton"),
                         value: _sexo,
                         icon: Icon(Icons.arrow_drop_down),
                         iconSize: 24,
@@ -128,6 +129,7 @@ class _ProfilingState extends State<Profiling> {
                         items: <String>['Masculino', 'Feminino']
                             .map((String value) {
                           return DropdownMenuItem<String>(
+                            key: ValueKey(value),
                             child: Text(value),
                             value: value,
                           );

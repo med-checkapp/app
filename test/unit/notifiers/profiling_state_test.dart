@@ -22,7 +22,7 @@ void main() {
   test('Change sex field', () {
     final ps = ProfilingState();
     final bool aux = ps.sexo;
-    //ps.changeSexo();
+    ps.fillSex();
     expect(aux, !ps.sexo);
   });
 }
