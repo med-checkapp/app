@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:check_app/models/wiki.dart';
 import 'package:check_app/services/wiki.dart';
 import 'package:check_app/pages/wiki_web_view.dart';
@@ -68,9 +67,9 @@ class _WikiPageState extends State<WikiPage> {
     return FutureBuilder(
       future: _futureWiki,
       builder: (context, snapshot) {
-        if (snapshot.hasData)
+        if (snapshot.hasData) {
           return _showTabs(snapshot.data);
-        else if (snapshot.hasError)
+        } else if (snapshot.hasError) {
           return Scaffold(
             appBar: AppBar(),
             body: Center(
@@ -89,6 +88,7 @@ class _WikiPageState extends State<WikiPage> {
               ],
             ))),
           );
+        }
         return Center(child: CircularProgressIndicator());
       },
     );

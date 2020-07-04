@@ -126,8 +126,7 @@ class _ProfilingState extends State<Profiling> {
                             _sexo = novoSexo;
                           });
                         },
-                        items: <String>['Masculino', 'Feminino']
-                            .map((String value) {
+                        items: <String>['Masculino', 'Feminino'].map((value) {
                           return DropdownMenuItem<String>(
                             key: ValueKey(value),
                             child: Text(value),

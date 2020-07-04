@@ -99,9 +99,9 @@ class _ActionsListState extends State<ActionsList> {
     return FutureBuilder(
       future: futureDisease,
       builder: (context, snapshot) {
-        if (snapshot.hasData)
+        if (snapshot.hasData) {
           return _diseasesList(snapshot.data);
-        else if (snapshot.hasError) return Center(child: Text("Error"));
+        } else if (snapshot.hasError) return Center(child: Text("Error"));
         return Center(child: CircularProgressIndicator());
       },
     );
