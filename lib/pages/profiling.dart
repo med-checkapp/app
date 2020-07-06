@@ -14,15 +14,17 @@ class Profiling extends StatefulWidget {
 
 class _ProfilingState extends State<Profiling> {
   int _idade;
-  String _sexo;
   final _idadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _autovalidar = false;
+  String sexoSelecionado;
+  List<bool> _sexo;
   Future<List<Disease>> futureDisease;
 
   @override
   void initState() {
     super.initState();
+    _sexo = [false, false];
   }
 
   @override
@@ -58,7 +60,8 @@ class _ProfilingState extends State<Profiling> {
     setState(() {
       Provider.of<ProfilingState>(context, listen: false).clearAge();
       Provider.of<ProfilingState>(context, listen: false).clearSex();
-      _sexo = null;
+      _sexo = [false, false];
+      sexoSelecionado = null;
       _idadeController.clear();
       _autovalidar = false;
     });
@@ -105,36 +108,42 @@ class _ProfilingState extends State<Profiling> {
                   ),
                 ),
                 Center(
-                  child: DropdownButtonHideUnderline(
-                    child: Listener(
-                      onPointerDown: (_) => FocusScope.of(context).unfocus(),
-                      child: DropdownButton<dynamic>(
-                        key: ValueKey("DropdownButton"),
-                        value: _sexo,
-                        icon: Icon(Icons.arrow_drop_down),
-                        iconSize: 24,
-                        elevation: 16,
-                        hint: Text("Sexo"),
-                        onChanged: (novoSexo) {
-                          if (!Provider.of<ProfilingState>(context,
-                                  listen: false)
-                              .sexo) {
-                            Provider.of<ProfilingState>(context, listen: false)
-                                .fillSex();
-                          }
-                          setState(() {
-                            _sexo = novoSexo;
-                          });
-                        },
-                        items: <String>['Masculino', 'Feminino'].map((value) {
-                          return DropdownMenuItem<String>(
-                            key: ValueKey(value),
-                            child: Text(value),
-                            value: value,
-                          );
-                        }).toList(),
+                  child: ToggleButtons(
+                    fillColor: Colors.teal,
+                    selectedColor: Colors.white,
+                    color: Colors.teal,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 20,
+                        ),
+                        child: Text("Masculino"),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 20.0,
+                        ),
+                        child: Text("Feminino"),
+                      )
+                    ],
+                    onPressed: (int index) {
+                      setState(() {
+                        if (index == 0) {
+                          _sexo[0] = true;
+                          _sexo[1] = false;
+                          sexoSelecionado = "Masculino";
+                        } else {
+                          _sexo[0] = false;
+                          _sexo[1] = true;
+                          sexoSelecionado = "Feminino";
+                        }
+                      });
+                      Provider.of<ProfilingState>(context, listen: false)
+                          .fillSex();
+                    },
+                    isSelected: _sexo,
                   ),
                 ),
                 Row(
@@ -151,13 +160,16 @@ class _ProfilingState extends State<Profiling> {
                         child: Text("Continuar"),
                         onPressed: profile.filled
                             ? () {
-                                dynamic validation = validate(_idade, _sexo);
+                                dynamic validation =
+                                    validate(_idade, sexoSelecionado);
+                                print(sexoSelecionado);
                                 if (validation['isValid']) {
                                   futureDisease = getDiseasesByProfileTarget(
-                                      sex: _sexo, age: _idade.toString());
+                                      sex: sexoSelecionado,
+                                      age: _idade.toString());
                                   Navigator.pushNamed(context, actionsListRoute,
                                       arguments: {
-                                        'sexo': _sexo,
+                                        'sexo': sexoSelecionado,
                                         'idade': _idade,
                                       });
                                 } else {

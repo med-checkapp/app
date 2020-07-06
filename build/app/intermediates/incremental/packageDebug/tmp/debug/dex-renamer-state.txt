@@ -1,4 +1,0 @@
-#Wed Jun 10 11:03:31 BRT 2020
-base.0=/home/wander/Desktop/checkapp/app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

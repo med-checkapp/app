@@ -6,3 +6,5 @@ linter:
     avoid_relative_lib_imports: false
     prefer_mixin: false
     prefer_relative_imports: false
+    omit_local_variable_types: false
+    avoid_types_on_closure_parameters: false

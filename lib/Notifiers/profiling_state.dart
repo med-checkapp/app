@@ -22,7 +22,7 @@ class ProfilingState with ChangeNotifier {
   }
 
   void fillSex() {
-    _sexFilled = !_sexFilled;
+    _sexFilled = true;
     notifyListeners();
   }
 
