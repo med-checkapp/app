@@ -89,7 +89,12 @@ class _WikiPageState extends State<WikiPage> {
             ))),
           );
         }
-        return Center(child: CircularProgressIndicator());
+        return Scaffold(
+          appBar: AppBar(),
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
