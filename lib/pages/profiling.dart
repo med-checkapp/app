@@ -108,42 +108,45 @@ class _ProfilingState extends State<Profiling> {
                   ),
                 ),
                 Center(
-                  child: ToggleButtons(
-                    fillColor: Colors.teal,
-                    selectedColor: Colors.white,
-                    color: Colors.teal,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal: 20,
+                  child: Listener(
+                    onPointerDown: (_) => FocusScope.of(context).unfocus(),
+                    child: ToggleButtons(
+                      fillColor: Colors.teal,
+                      selectedColor: Colors.white,
+                      color: Colors.teal,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12.0,
+                            horizontal: 20,
+                          ),
+                          child: Text("Masculino"),
                         ),
-                        child: Text("Masculino"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal: 20.0,
-                        ),
-                        child: Text("Feminino"),
-                      )
-                    ],
-                    onPressed: (int index) {
-                      setState(() {
-                        if (index == 0) {
-                          _sexo[0] = true;
-                          _sexo[1] = false;
-                          sexoSelecionado = "Masculino";
-                        } else {
-                          _sexo[0] = false;
-                          _sexo[1] = true;
-                          sexoSelecionado = "Feminino";
-                        }
-                      });
-                      Provider.of<ProfilingState>(context, listen: false)
-                          .fillSex();
-                    },
-                    isSelected: _sexo,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12.0,
+                            horizontal: 20.0,
+                          ),
+                          child: Text("Feminino"),
+                        )
+                      ],
+                      onPressed: (int index) {
+                        setState(() {
+                          if (index == 0) {
+                            _sexo[0] = true;
+                            _sexo[1] = false;
+                            sexoSelecionado = "Masculino";
+                          } else {
+                            _sexo[0] = false;
+                            _sexo[1] = true;
+                            sexoSelecionado = "Feminino";
+                          }
+                        });
+                        Provider.of<ProfilingState>(context, listen: false)
+                            .fillSex();
+                      },
+                      isSelected: _sexo,
+                    ),
                   ),
                 ),
                 Row(
