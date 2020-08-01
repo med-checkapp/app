@@ -1,6 +1,6 @@
 import 'package:check_app/models/profile_targets.dart';
 
-class Action {
+class ActionInfo {
   final String id;
   final String name;
   final String wikiId;
@@ -8,7 +8,7 @@ class Action {
   final String disclaimer;
   final List<TargetProfile> targetProfiles;
 
-  Action(
+  ActionInfo(
       {this.id,
       this.name,
       this.wikiId,
@@ -16,8 +16,8 @@ class Action {
       this.formName,
       this.disclaimer});
 
-  factory Action.fromJson(Map<String, dynamic> json) {
-    return Action(
+  factory ActionInfo.fromJson(Map<String, dynamic> json) {
+    return ActionInfo(
         id: json["_id"] ?? "",
         name: json["name"] ?? "",
         wikiId: json["wikiID"] ?? "",

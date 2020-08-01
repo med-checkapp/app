@@ -1,10 +1,10 @@
-import 'package:check_app/models/actions.dart';
+import 'package:check_app/models/action_info.dart';
 
 class Disease {
   final String id;
   final String name;
   final String description;
-  final List<Action> actions;
+  final List<ActionInfo> actions;
 
   Disease({this.id, this.name, this.description, this.actions});
 
@@ -14,7 +14,7 @@ class Disease {
         name: json['name'],
         description: json["description"] ?? "",
         actions: json["actions"]
-            .map<Action>((action) => Action.fromJson(action))
+            .map<ActionInfo>((action) => ActionInfo.fromJson(action))
             .toList());
   }
 }

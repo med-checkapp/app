@@ -72,123 +72,131 @@ class _ProfilingState extends State<Profiling> {
     SizeConfig().init(context);
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("CheckApp"),
-        ),
-        body: Form(
-          key: _formKey,
-          child: Container(
-            height: SizeConfig.safeBlockVertical * 80,
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Center(
-                    child: Text("Entre com os dados do paciente",
-                        style: TextStyle(fontSize: 20.0))),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  autovalidate: _autovalidar,
-                  controller: _idadeController,
-                  onChanged: (value) {
-                    preenchaIdade(context, value);
-                  },
-                  validator: (input) {
-                    if (input.length == 0) {
-                      return 'Idade não pode ser vazia';
-                    } else {
-                      _idade = int.tryParse(input);
-                      return null;
-                    }
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Idade",
-                  ),
+      appBar: AppBar(
+        title: Text("CheckApp"),
+      ),
+      body: Form(
+        key: _formKey,
+        child: Container(
+          height: SizeConfig.safeBlockVertical * 80,
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Center(
+                  child: Text("Entre com os dados do paciente",
+                      style: TextStyle(fontSize: 20.0))),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                autovalidate: _autovalidar,
+                controller: _idadeController,
+                onChanged: (value) {
+                  preenchaIdade(context, value);
+                },
+                validator: (input) {
+                  if (input.length == 0) {
+                    return 'Idade não pode ser vazia';
+                  } else {
+                    _idade = int.tryParse(input);
+                    return null;
+                  }
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Idade",
                 ),
-                Center(
-                  child: Listener(
-                    onPointerDown: (_) => FocusScope.of(context).unfocus(),
-                    child: ToggleButtons(
-                      fillColor: Colors.teal,
-                      selectedColor: Colors.white,
-                      color: Colors.teal,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 20,
-                          ),
-                          child: Text("Masculino"),
+              ),
+              Center(
+                child: Listener(
+                  onPointerDown: (_) => FocusScope.of(context).unfocus(),
+                  child: ToggleButtons(
+                    fillColor: Colors.teal,
+                    selectedColor: Colors.white,
+                    color: Colors.teal,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 20,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 20.0,
-                          ),
-                          child: Text("Feminino"),
-                        )
-                      ],
-                      onPressed: (int index) {
-                        setState(() {
-                          if (index == 0) {
-                            _sexo[0] = true;
-                            _sexo[1] = false;
-                            sexoSelecionado = "Masculino";
-                          } else {
-                            _sexo[0] = false;
-                            _sexo[1] = true;
-                            sexoSelecionado = "Feminino";
-                          }
-                        });
-                        Provider.of<ProfilingState>(context, listen: false)
-                            .fillSex();
-                      },
-                      isSelected: _sexo,
-                    ),
+                        child: Text("Masculino"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 20.0,
+                        ),
+                        child: Text("Feminino"),
+                      )
+                    ],
+                    onPressed: (int index) {
+                      setState(() {
+                        if (index == 0) {
+                          _sexo[0] = true;
+                          _sexo[1] = false;
+                          sexoSelecionado = "Masculino";
+                        } else {
+                          _sexo[0] = false;
+                          _sexo[1] = true;
+                          sexoSelecionado = "Feminino";
+                        }
+                      });
+                      Provider.of<ProfilingState>(context, listen: false)
+                          .fillSex();
+                    },
+                    isSelected: _sexo,
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    RaisedButton(
-                        child: Text("Limpar"),
-                        onPressed: () {
-                          clearNotifier(context);
-                        }),
-                    Consumer<ProfilingState>(builder: (context, profile, _) {
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  RaisedButton(
+                      child: Text("Limpar"),
+                      onPressed: () {
+                        clearNotifier(context);
+                      }),
+                  Consumer<ProfilingState>(
+                    builder: (context, profile, _) {
                       return RaisedButton(
                         child: Text("Continuar"),
                         onPressed: profile.filled
                             ? () {
                                 dynamic validation =
                                     validate(_idade, sexoSelecionado);
-                                print(sexoSelecionado);
                                 if (validation['isValid']) {
                                   futureDisease = getDiseasesByProfileTarget(
-                                      sex: sexoSelecionado,
-                                      age: _idade.toString());
-                                  Navigator.pushNamed(context, actionsListRoute,
-                                      arguments: {
-                                        'sexo': sexoSelecionado,
-                                        'idade': _idade,
-                                      });
+                                    sex: sexoSelecionado,
+                                    age: _idade.toString(),
+                                  );
+                                  Navigator.pushNamed(
+                                    context,
+                                    actionsListRoute,
+                                    arguments: {
+                                      'sexo': sexoSelecionado,
+                                      'idade': _idade,
+                                    },
+                                  );
                                 } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(validation["reason"]),
-                                  ));
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(validation["reason"]),
+                                    ),
+                                  );
                                 }
                               }
                             : null,
                       );
-                    })
-                  ],
-                )
-              ],
-            ),
+                    },
+                  )
+                ],
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

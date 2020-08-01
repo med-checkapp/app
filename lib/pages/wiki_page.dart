@@ -35,28 +35,34 @@ class _WikiPageState extends State<WikiPage> {
       length: wiki.content.length,
       child: Scaffold(
         appBar: AppBar(
-            bottom: TabBar(
-                //indicatorSize: TabBarIndicatorSize.label,
-                isScrollable: true,
-                tabs: wiki.content
-                    .map<Tab>((k) => Tab(text: capitalize(k.name)))
-                    .toList()),
-            title: Text("CheckApp")),
+          bottom: TabBar(
+              //indicatorSize: TabBarIndicatorSize.label,
+              isScrollable: true,
+              tabs: wiki.content
+                  .map<Tab>((k) => Tab(text: capitalize(k.name)))
+                  .toList()),
+          title: Text("CheckApp"),
+        ),
         body: TabBarView(
-            children: wiki.content
-                .map<Html>((k) => Html(
-                    padding: EdgeInsets.all(20.0),
-                    data: k.body,
-                    onLinkTap: (url) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WikiWebView(url),
-                        ),
-                      );
-                      //_launchLink(url, context);
-                    }))
-                .toList()),
+          children: wiki.content
+              .map<Html>(
+                (k) => Html(
+                  padding: EdgeInsets.all(20.0),
+                  data: k.body,
+                  onLinkTap: (url) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WikiWebView(
+                            """https://www.sheffield.ac.uk/FRAX/tool.aspx?country=55"""),
+                      ),
+                    );
+                    //_launchLink(url, context);
+                  },
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }
@@ -73,20 +79,22 @@ class _WikiPageState extends State<WikiPage> {
           return Scaffold(
             appBar: AppBar(),
             body: Center(
-                child: Center(
-                    child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "🥺",
-                  style: TextStyle(fontSize: 125),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "🥺",
+                      style: TextStyle(fontSize: 125),
+                    ),
+                    Text(
+                      "Conteúdo não disponível.",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Conteúdo não disponível.",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ))),
+              ),
+            ),
           );
         }
         return Scaffold(
