@@ -19,12 +19,14 @@ class _ActionCardState extends State<ActionCard> {
       onTap: () => Navigator.pushNamed(context, wikiRoute,
           arguments: {"wikiId": widget.action.wikiId}),
       child: Card(
+        elevation: 2.5,
         child: Container(
           padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
           width: SizeConfig.screenWidth,
           height: SizeConfig.blockSizeVertical * 15,
           color: Colors.white12,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ListTile(
                 leading: Icon(
@@ -38,7 +40,7 @@ class _ActionCardState extends State<ActionCard> {
                   ),
                 ),
                 subtitle: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                   child: Text(
                     widget.action.disclaimer,
                   ),

@@ -18,15 +18,16 @@ class ActionInfo {
 
   factory ActionInfo.fromJson(Map<String, dynamic> json) {
     return ActionInfo(
-        id: json["_id"] ?? "",
-        name: json["name"] ?? "",
-        wikiId: json["wikiID"] ?? "",
-        targetProfiles: json.containsKey("targetProfiles")
-            ? json["targetProfiles"]
-                .map<TargetProfile>((target) => TargetProfile.fromJson(target))
-                .toList()
-            : [],
-        formName: json["formName"] ?? "",
-        disclaimer: json["disclaimer"] ?? "");
+      id: json["_id"] ?? "",
+      name: json["name"] ?? "",
+      wikiId: json["wikiID"] ?? "",
+      targetProfiles: json.containsKey("targetProfiles")
+          ? json["targetProfiles"]
+              .map<TargetProfile>((target) => TargetProfile.fromJson(target))
+              .toList()
+          : [],
+      formName: json["formName"] ?? "",
+      disclaimer: json["disclaimer"] ?? "",
+    );
   }
 }

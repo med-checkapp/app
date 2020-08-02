@@ -32,7 +32,7 @@ class _DiseasesListState extends State<DiseasesList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.all(1),
+      padding: EdgeInsets.all(4),
       itemCount: widget.diseases.length,
       itemBuilder: (context, index) {
         var disease = widget.diseases[index];
@@ -42,7 +42,10 @@ class _DiseasesListState extends State<DiseasesList> {
           key: GlobalKey(),
           title: Text(
             disease.name,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w300,
+            ),
           ),
           subtitle: Text(disease.description),
           children: disease.actions

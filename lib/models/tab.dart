@@ -5,6 +5,9 @@ class Tab {
   Tab({this.name, this.body});
 
   factory Tab.fromJson(Map<String, dynamic> json) {
-    return Tab(name: json['name'] ?? "", body: json['body'] ?? "");
+    return Tab(
+      name: json['name'] ?? "",
+      body: json['body'] ?? "",
+    );
   }
 }

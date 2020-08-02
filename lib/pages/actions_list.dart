@@ -32,8 +32,6 @@ class _ActionsListState extends State<ActionsList> {
         if (snapshot.hasData) {
           return DiseasesList(snapshot.data);
         } else if (snapshot.hasError) {
-          print(snapshot.error);
-
           return Center(
             child: Text("Error"),
           );
@@ -50,53 +48,55 @@ class _ActionsListState extends State<ActionsList> {
     SizeConfig().init(context);
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Doenças relacionadas"),
-        ),
-        body: Container(
-            child: Column(
-              children: [
-                Container(
-                  height: SizeConfig.blockSizeVertical * 5,
-                  padding: EdgeInsets.all(5),
-                  color: Color.fromRGBO(143, 255, 214, 0.5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(
-                        "Sexo: ${widget.profile['sexo']}",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      Text(
-                        "Idade: ${widget.profile['idade']}",
-                        style: TextStyle(fontSize: 20),
-                      )
-                    ],
+      appBar: AppBar(
+        title: Text("Doenças relacionadas"),
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              height: SizeConfig.blockSizeVertical * 5,
+              padding: EdgeInsets.all(5),
+              color: Color.fromRGBO(143, 255, 214, 0.5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "Sexo: ${widget.profile['sexo']}",
+                    style: TextStyle(fontSize: 20),
                   ),
-                ),
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: Text(
-                          "Ações sugeridas para o profile",
-                          style: TextStyle(
-                              fontSize: 21,
-                              decorationStyle: TextDecorationStyle.solid),
-                        ),
-                      ),
-                      Container(
-                        child: _futureBuilder(),
-                        height: SizeConfig.blockSizeVertical * 70,
-                      ),
-                    ],
-                  ),
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                ),
-              ],
+                  Text(
+                    "Idade: ${widget.profile['idade']}",
+                    style: TextStyle(fontSize: 20),
+                  )
+                ],
+              ),
             ),
-            alignment: Alignment.center,
-            color: Colors.white30));
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                    child: Text(
+                      "Ações sugeridas para o profile",
+                      style: TextStyle(
+                          fontSize: 21,
+                          decorationStyle: TextDecorationStyle.solid),
+                    ),
+                  ),
+                  Container(
+                    child: _futureBuilder(),
+                    height: SizeConfig.blockSizeVertical * 70,
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        color: Colors.white30,
+      ),
+    );
   }
 }
