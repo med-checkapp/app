@@ -173,7 +173,7 @@ class _ProfilingState extends State<Profiling> {
                                   );
                                   Navigator.pushNamed(
                                     context,
-                                    actionsListRoute,
+                                    diseasesSelection,
                                     arguments: {
                                       'sexo': sexoSelecionado,
                                       'idade': _idade,
