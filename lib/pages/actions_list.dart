@@ -6,9 +6,9 @@ import 'package:check_app/models/diseases.dart';
 import 'package:check_app/services/diseases.dart';
 
 class ActionsList extends StatefulWidget {
-  final Map<String, dynamic> profile;
+  final Map<String, dynamic> data;
 
-  ActionsList(this.profile);
+  ActionsList(this.data);
 
   @override
   _ActionsListState createState() => _ActionsListState();
@@ -21,8 +21,6 @@ class _ActionsListState extends State<ActionsList> {
   @override
   void initState() {
     super.initState();
-    futureDisease = getDiseasesByProfileTarget(
-        sex: widget.profile["sexo"], age: widget.profile["idade"].toString());
   }
 
   FutureBuilder _futureBuilder() {
@@ -62,11 +60,11 @@ class _ActionsListState extends State<ActionsList> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    "Sexo: ${widget.profile['sexo']}",
+                    "Sexo: ${widget.data['sexo']}",
                     style: TextStyle(fontSize: 20),
                   ),
                   Text(
-                    "Idade: ${widget.profile['idade']}",
+                    "Idade: ${widget.data['idade']}",
                     style: TextStyle(fontSize: 20),
                   )
                 ],
@@ -85,7 +83,7 @@ class _ActionsListState extends State<ActionsList> {
                     ),
                   ),
                   Container(
-                    child: _futureBuilder(),
+                    child: DiseasesList(widget.data["selected_diseases"]),
                     height: SizeConfig.blockSizeVertical * 70,
                   ),
                 ],

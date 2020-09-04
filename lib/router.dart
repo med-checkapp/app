@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:check_app/pages/actions_list.dart';
 import 'package:check_app/constants.dart';
 import 'package:check_app/pages/wiki_page.dart';
+import 'package:check_app/pages/diseases_selection.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,8 +23,14 @@ class Router {
       case wikiRoute:
         return MaterialPageRoute(
             builder: (ctx) => WikiPage(settings.arguments));
+<<<<<<< HEAD
       case informativeRoute:
         return MaterialPageRoute(builder: (ctx) => Informative());
+=======
+      case diseasesSelection:
+        return MaterialPageRoute(
+            builder: (ctx) => DiseasesSelection(settings.arguments));
+>>>>>>> 54f31b98fbaa9e1e2ce7c4e567b43e8d6bb8246d
       default:
         return MaterialPageRoute(
             builder: (ctx) => Scaffold(
