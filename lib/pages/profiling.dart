@@ -171,14 +171,13 @@ class _ProfilingState extends State<Profiling> {
                                     sex: sexoSelecionado,
                                     age: _idade.toString(),
                                   );
-                                  Navigator.pushNamed(
-                                    context,
-                                    actionsListRoute,
-                                    arguments: {
-                                      'sexo': sexoSelecionado,
-                                      'idade': _idade,
-                                    },
-                                  );
+                                  Navigator.pushNamed(context, informativeRoute
+                                      // actionsListRoute,
+                                      // arguments: {
+                                      //   'sexo': sexoSelecionado,
+                                      //   'idade': _idade,
+                                      // },
+                                      );
                                 } else {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(

@@ -3,6 +3,8 @@ import 'package:check_app/constants.dart';
 import 'package:check_app/models/action_info.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class ActionCard extends StatefulWidget {
   final ActionInfo action;
 
@@ -16,8 +18,7 @@ class _ActionCardState extends State<ActionCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, wikiRoute,
-          arguments: {"wikiId": widget.action.wikiId}),
+      onTap: () => Navigator.pushNamed(context, informativeRoute),
       child: Card(
         elevation: 2.5,
         child: Container(

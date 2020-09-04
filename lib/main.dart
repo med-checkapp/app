@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:check_app/router.dart';
+import './router.dart' as r;
 import 'package:check_app/constants.dart';
 
 void main() => runApp(App());
@@ -12,7 +12,7 @@ class App extends StatelessWidget {
             buttonColor: Colors.teal, textTheme: ButtonTextTheme.primary),
         primaryColor: Colors.teal,
       ),
-      onGenerateRoute: Router.generateRoute,
+      onGenerateRoute: r.Router.generateRoute,
       initialRoute: homeRoute,
     );
   }
