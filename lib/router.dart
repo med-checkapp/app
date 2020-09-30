@@ -1,5 +1,7 @@
 import 'package:check_app/Notifiers/profiling_state.dart';
 import 'package:check_app/pages/informative.dart';
+import 'package:check_app/pages/more_info.dart';
+import 'package:check_app/pages/results.dart';
 import 'package:flutter/material.dart';
 import 'package:check_app/pages/profiling.dart';
 import 'package:provider/provider.dart';
@@ -23,14 +25,16 @@ class Router {
       case wikiRoute:
         return MaterialPageRoute(
             builder: (ctx) => WikiPage(settings.arguments));
-<<<<<<< HEAD
       case informativeRoute:
         return MaterialPageRoute(builder: (ctx) => Informative());
-=======
       case diseasesSelection:
         return MaterialPageRoute(
             builder: (ctx) => DiseasesSelection(settings.arguments));
->>>>>>> 54f31b98fbaa9e1e2ce7c4e567b43e8d6bb8246d
+      case moreInfoRoute:
+        return MaterialPageRoute(
+            builder: (ctx) => MoreInfo(settings.arguments));
+      case resultsRoute:
+        return MaterialPageRoute(builder: (ctx) => Results());
       default:
         return MaterialPageRoute(
             builder: (ctx) => Scaffold(

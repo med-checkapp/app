@@ -171,15 +171,6 @@ class _ProfilingState extends State<Profiling> {
                                     sex: sexoSelecionado,
                                     age: _idade.toString(),
                                   );
-<<<<<<< HEAD
-                                  Navigator.pushNamed(context, informativeRoute
-                                      // actionsListRoute,
-                                      // arguments: {
-                                      //   'sexo': sexoSelecionado,
-                                      //   'idade': _idade,
-                                      // },
-                                      );
-=======
                                   Navigator.pushNamed(
                                     context,
                                     diseasesSelection,
@@ -188,7 +179,6 @@ class _ProfilingState extends State<Profiling> {
                                       'idade': _idade,
                                     },
                                   );
->>>>>>> 54f31b98fbaa9e1e2ce7c4e567b43e8d6bb8246d
                                 } else {
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
