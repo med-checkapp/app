@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:check_app/config_size.dart';
 import 'package:check_app/models/diseases.dart';
-import 'package:check_app/services/diseases.dart';
 
 class ActionsList extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -21,24 +20,6 @@ class _ActionsListState extends State<ActionsList> {
   @override
   void initState() {
     super.initState();
-  }
-
-  FutureBuilder _futureBuilder() {
-    return FutureBuilder(
-      future: futureDisease,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return DiseasesList(snapshot.data);
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text("Error"),
-          );
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
   }
 
   @override

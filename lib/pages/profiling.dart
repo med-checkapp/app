@@ -1,4 +1,4 @@
-import 'package:check_app/Notifiers/profiling_state.dart';
+import 'package:check_app/notifiers/profiling_state.dart';
 import 'package:check_app/config_size.dart';
 import 'package:check_app/constants.dart';
 import 'package:check_app/models/diseases.dart';

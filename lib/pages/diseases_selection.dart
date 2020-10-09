@@ -2,7 +2,6 @@ import 'package:check_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:check_app/services/diseases.dart';
 import 'package:check_app/models/diseases.dart';
-import 'package:check_app/components/diseases_list.dart';
 import 'package:check_app/config_size.dart';
 
 class DiseasesSelection extends StatefulWidget {
@@ -28,7 +27,55 @@ class _DiseasesSelectionState extends State<DiseasesSelection> {
     }
   }
 
-  ListView diseasesListView(dynamic data) {
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Doenças relaciondas"),
+        ),
+        body: Container(child: _futureBuilderDisease()));
+  }
+
+  FutureBuilder _futureBuilderDisease() {
+    return FutureBuilder(
+      future: futureDisease,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData &&
+            snapshot.connectionState == ConnectionState.done) {
+          return _diseasesSelection(snapshot.data);
+        }
+
+        return snapshot.hasError
+            ? Center(
+                child: Text("Error"),
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
+    );
+  }
+
+  Widget _diseasesSelection(dynamic data) {
+    print(data);
+    return Container(
+      height: SizeConfig.blockSizeVertical * 100,
+      child: Column(
+        children: [
+          Container(
+              height: SizeConfig.blockSizeVertical * 70,
+              child: _diseasesListView(data)),
+          RaisedButton(
+            child: Text("Continuar"),
+            onPressed: data != null ? _onPressContinue : null,
+          )
+        ],
+      ),
+    );
+  }
+
+  ListView _diseasesListView(dynamic data) {
     if (diseasesSelection == null) {
       diseasesSelection =
           Map.fromIterable(data, key: (e) => e.name, value: (e) => true);
@@ -50,51 +97,12 @@ class _DiseasesSelectionState extends State<DiseasesSelection> {
     );
   }
 
-  FutureBuilder _futureBuilder() {
-    return FutureBuilder(
-      future: futureDisease,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return diseasesListView(snapshot.data);
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text("Error"),
-          );
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    print(SizeConfig.blockSizeVertical);
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Doenças relaciondas"),
-        ),
-        body: Container(
-            child: Column(children: [
-          Container(
-            height: SizeConfig.blockSizeVertical * 70,
-            child: _futureBuilder(),
-          ),
-          RaisedButton(
-            child: Text("Continuar"),
-            onPressed: () {
-              var keys =
-                  diseasesSelection.keys.where((key) => diseasesSelection[key]);
-              Navigator.pushNamed(context, actionsListRoute, arguments: {
-                'selected_diseases': diseases
-                    .where((disease) => keys.contains(disease.name))
-                    .toList(),
-                ...widget.profile
-              });
-            },
-          )
-        ])));
+  void _onPressContinue() {
+    var keys = diseasesSelection.keys.where((key) => diseasesSelection[key]);
+    Navigator.pushNamed(context, actionsListRoute, arguments: {
+      'selected_diseases':
+          diseases.where((disease) => keys.contains(disease.name)).toList(),
+      ...widget.profile
+    });
   }
 }

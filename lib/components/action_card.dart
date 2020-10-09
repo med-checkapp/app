@@ -18,7 +18,9 @@ class _ActionCardState extends State<ActionCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, informativeRoute),
+      onTap: () {
+        Navigator.pushNamed(context, fraxRoute);
+      },
       child: Card(
         elevation: 2.5,
         child: Container(

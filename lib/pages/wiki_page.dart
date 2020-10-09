@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:check_app/models/wiki.dart';
 import 'package:check_app/services/wiki.dart';
 import 'package:check_app/pages/wiki_web_view.dart';
+import 'package:check_app/constants.dart';
 
 class WikiPage extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -50,13 +51,7 @@ class _WikiPageState extends State<WikiPage> {
                   padding: EdgeInsets.all(20.0),
                   data: k.body,
                   onLinkTap: (url) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WikiWebView(
-                            """https://www.sheffield.ac.uk/FRAX/tool.aspx?country=55"""),
-                      ),
-                    );
+                    Navigator.pushNamed(context, fraxRoute);
                     //_launchLink(url, context);
                   },
                 ),
