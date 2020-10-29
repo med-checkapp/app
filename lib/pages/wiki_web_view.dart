@@ -51,6 +51,7 @@ class _WikiWebViewState extends State<WikiWebView> {
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (controller) {
                   _pageController = controller;
+                  _pageController.clearCache();
                 },
                 javascriptChannels: <JavascriptChannel>{
                   JavascriptChannel(
@@ -62,20 +63,21 @@ class _WikiWebViewState extends State<WikiWebView> {
                         });
                       })
                 },
-                onPageFinished: (_) async {
+                onPageFinished: (_) {
+                  _pageController.evaluateJavascript(_parse());
+
+                  _pageController.evaluateJavascript(
+                      "window.document.querySelector('input[type=submit]').click()");
+                  print("cu1234");
                   _pageController.evaluateJavascript("""
-                    var target = window.document.querySelector('#ContentPlaceHolder1_updResult')
+                    var target = window.document.querySelector('#ctl00_ContentPlaceHolder1_updResult')
                     var observer = new MutationObserver(function(mutations) {
-                      var alvo = window.document.querySelector('#ContentPlaceHolder1_lbbmi');
+                      var alvo = window.document.querySelector('#ctl00_ContentPlaceHolder1_lbrs1');
                       Salve.postMessage(alvo.innerHTML);
                     });
                     var config = { attributes: true, childList: true, characterData: true };
                     observer.observe(target, config);
                   """);
-                  String querySelector = "window.document.querySelector";
-                  _pageController.evaluateJavascript(_parse());
-                  _pageController.evaluateJavascript(
-                      "$querySelector('input[id\$=_btnCalculate]').click()");
                 },
               ),
             ),
@@ -105,7 +107,6 @@ class _WikiWebViewState extends State<WikiWebView> {
         default:
       }
     });
-    print(string);
     return string;
   }
 }

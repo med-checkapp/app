@@ -1,4 +1,3 @@
-import 'package:check_app/pages/informative.dart';
 import 'package:check_app/pages/more_info.dart';
 import 'package:check_app/pages/results.dart';
 import 'package:check_app/notifiers/profiling_state.dart';
@@ -26,8 +25,6 @@ class RouterConfig {
       case wikiRoute:
         return MaterialPageRoute(
             builder: (ctx) => WikiPage(settings.arguments));
-      case informativeRoute:
-        return MaterialPageRoute(builder: (ctx) => Informative());
       case diseasesSelection:
         return MaterialPageRoute(
             builder: (ctx) => DiseasesSelection(settings.arguments));
