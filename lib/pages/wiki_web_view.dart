@@ -57,6 +57,7 @@ class _WikiWebViewState extends State<WikiWebView> {
                   JavascriptChannel(
                       name: 'Salve',
                       onMessageReceived: (JavascriptMessage result) {
+                        print("hahaha");
                         setState(() {
                           resultado = result.message;
                           finishedCalculate = true;
@@ -64,6 +65,7 @@ class _WikiWebViewState extends State<WikiWebView> {
                       })
                 },
                 onPageFinished: (_) {
+<<<<<<< HEAD
                   _pageController.evaluateJavascript(_parse());
 
                   _pageController.evaluateJavascript(
@@ -73,6 +75,12 @@ class _WikiWebViewState extends State<WikiWebView> {
                     var target = window.document.querySelector('#ctl00_ContentPlaceHolder1_updResult')
                     var observer = new MutationObserver(function(mutations) {
                       var alvo = window.document.querySelector('#ctl00_ContentPlaceHolder1_lbrs1');
+=======
+                  _pageController.evaluateJavascript("""
+                    let target = window.document.querySelector('#ctl00_ContentPlaceHolder1_updResult')
+                    let observer = new MutationObserver(function(mutations) {
+                      let alvo = window.document.querySelector('#ctl00_ContentPlaceHolder1_lbrs1');
+>>>>>>> 8955a17f08d4143715864850961694610a7d919c
                       Salve.postMessage(alvo.innerHTML);
                     });
                     var config = { attributes: true, childList: true, characterData: true };
