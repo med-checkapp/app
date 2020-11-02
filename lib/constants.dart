@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 const double LI = 6.4;
 
@@ -14,7 +13,7 @@ const String wikiRoute = '/wiki';
 const String fraxRoute = '/frax';
 // const String serverUrl = 'ratel.ime.usp.br:3001';
 // const String serverUrl = 'localhost:3000';
-const String serverUrl = '10.0.2.2:3000';
+const String serverUrl = '192.168.15.75:3000';
 const String texto_informativo_osteo = """
 <center> Fraturas por Osteoporose </center>
 <br><br><br><br>

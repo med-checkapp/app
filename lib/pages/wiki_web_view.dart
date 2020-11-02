@@ -51,22 +51,24 @@ class _WikiWebViewState extends State<WikiWebView> {
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (controller) {
                   _pageController = controller;
+                  _pageController.clearCache();
                 },
                 javascriptChannels: <JavascriptChannel>{
                   JavascriptChannel(
                       name: 'Salve',
                       onMessageReceived: (JavascriptMessage result) {
+                        print("hahaha");
                         setState(() {
                           resultado = result.message;
                           finishedCalculate = true;
                         });
                       })
                 },
-                onPageFinished: (_) async {
+                onPageFinished: (_) {
                   _pageController.evaluateJavascript("""
-                    var target = window.document.querySelector('#ContentPlaceHolder1_updResult')
-                    var observer = new MutationObserver(function(mutations) {
-                      var alvo = window.document.querySelector('#ContentPlaceHolder1_lbbmi');
+                    let target = window.document.querySelector('#ctl00_ContentPlaceHolder1_updResult')
+                    let observer = new MutationObserver(function(mutations) {
+                      let alvo = window.document.querySelector('#ctl00_ContentPlaceHolder1_lbrs1');
                       Salve.postMessage(alvo.innerHTML);
                     });
                     var config = { attributes: true, childList: true, characterData: true };
